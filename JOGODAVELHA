@@ -1,0 +1,59 @@
+import random
+
+class JogoDaVelha:
+    def __init__(self):
+        self.tabuleiro = [' ' for _ in range(9)]  # Tabuleiro vazio
+        self.jogador_atual = 'X'  # Começa com o jogador X
+        self.terminado = False  # Flag para indicar se o jogo terminou
+
+    def imprimir_tabuleiro(self):
+        for i in range(0, 9, 3):
+            print(self.tabuleiro[i], '|', self.tabuleiro[i+1], '|', self.tabuleiro[i+2])
+            if i < 6:
+                print('-' * 9)
+
+    def fazer_jogada(self, posicao):
+        if not self.terminado and self.tabuleiro[posicao] == ' ':
+            self.tabuleiro[posicao] = self.jogador_atual
+            self.jogador_atual = 'O' if self.jogador_atual == 'X' else 'X'
+            self.verificar_vitoria()
+            self.imprimir_tabuleiro()
+
+    def verificar_vitoria(self):
+        linhas_vitoria = [[0, 1, 2], [3, 4, 5], [6, 7, 8],  # linhas
+                          [0, 3, 6], [1, 4, 7], [2, 5, 8],  # colunas
+                          [0, 4, 8], [2, 4, 6]]             # diagonais
+
+        for linha in linhas_vitoria:
+            if self.tabuleiro[linha[0]] == self.tabuleiro[linha[1]] == self.tabuleiro[linha[2]] != ' ':
+                print(f'Jogador {self.tabuleiro[linha[0]]} venceu!')
+                self.terminado = True
+                return
+
+        if ' ' not in self.tabuleiro:
+            print("Empate!")
+            self.terminado = True
+
+    def jogar_computador(self):
+        if not self.terminado:
+            posicoes_disponiveis = [i for i, espaco in enumerate(self.tabuleiro) if espaco == ' ']
+            posicao = random.choice(posicoes_disponiveis)
+            self.fazer_jogada(posicao)
+
+def main():
+    jogo = JogoDaVelha()
+    while not jogo.terminado:
+        jogo.imprimir_tabuleiro()
+        if jogo.jogador_atual == 'X':
+            try:
+                posicao = int(input(f"Jogador {jogo.jogador_atual}, escolha uma posição (0-8): "))
+                jogo.fazer_jogada(posicao)
+            except ValueError:
+                print("Por favor, insira um número válido de 0 a 8.")
+        else:
+            print("Computador está pensando...")
+            jogo.jogar_computador()
+        print()  # Linha em branco após cada jogada
+
+if __name__ == "__main__":
+    main()
