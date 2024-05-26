@@ -2,9 +2,9 @@ import random
 
 class JogoDaVelha:
     def __init__(self):
-        self.tabuleiro = [' ' for _ in range(9)]  # Tabuleiro vazio
-        self.jogador_atual = 'X'  # Começa com o jogador X
-        self.terminado = False  # Flag para indicar se o jogo terminou
+        self.tabuleiro = [' ' for _ in range(9)] 
+        self.jogador_atual = 'X'
+        self.terminado = False
 
     def imprimir_tabuleiro(self):
         for i in range(0, 9, 3):
@@ -20,9 +20,9 @@ class JogoDaVelha:
             self.imprimir_tabuleiro()
 
     def verificar_vitoria(self):
-        linhas_vitoria = [[0, 1, 2], [3, 4, 5], [6, 7, 8],  # linhas
-                          [0, 3, 6], [1, 4, 7], [2, 5, 8],  # colunas
-                          [0, 4, 8], [2, 4, 6]]             # diagonais
+        linhas_vitoria = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
+                          [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                          [0, 4, 8], [2, 4, 6]]
 
         for linha in linhas_vitoria:
             if self.tabuleiro[linha[0]] == self.tabuleiro[linha[1]] == self.tabuleiro[linha[2]] != ' ':
